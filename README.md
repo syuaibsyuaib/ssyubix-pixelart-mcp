@@ -2,19 +2,19 @@
 
 <!-- mcp-name: io.github.syuaibsyuaib/ssyubix-pixelart-mcp -->
 
-MCP server (Python) untuk menggambar pixel art dan menyusun tileset game 2D.
-Dibangun dengan [MCP Python SDK v1.x](https://github.com/modelcontextprotocol/python-sdk)
-(stable), transport **stdio**, dirancang untuk dipakai berdampingan dengan
-`unity-mcp-server` dalam satu sesi agent.
+MCP server (Python) for drawing pixel art and assembling 2D game tilesets.
+Built with [MCP Python SDK v1.x](https://github.com/modelcontextprotocol/python-sdk)
+(stable), **stdio** transport, designed to be used alongside
+`unity-mcp-server` in a single agent session.
 
-## Instalasi
+## Installation
 
-Dari PyPI:
+From PyPI:
 ```bash
 pip install ssyubix-pixelart-mcp
 ```
 
-Atau dari source:
+Or from source:
 ```bash
 git clone https://github.com/syuaibsyuaib/ssyubix-pixelart-mcp
 cd ssyubix-pixelart-mcp
@@ -23,124 +23,124 @@ source venv/bin/activate   # Windows: venv\Scripts\activate
 pip install -e .
 ```
 
-## Menjalankan
+## Running
 
 ```bash
 python -m pixelart_mcp.server
-# atau, jika diinstall dari PyPI:
+# or, if installed from PyPI:
 ssyubix-pixelart-mcp
 ```
 
-## Menyambungkan ke Claude Desktop / Claude Code
+## Connecting to Claude Desktop / Claude Code
 
-Tambahkan ke `claude_desktop_config.json` (Claude Desktop) atau lewat
+Add to `claude_desktop_config.json` (Claude Desktop) or via
 `claude mcp add` (Claude Code):
 
 ```json
 {
   "mcpServers": {
     "pixelart": {
-      "command": "/path/ke/ssyubix-pixelart-mcp/venv/bin/python",
+      "command": "/path/to/ssyubix-pixelart-mcp/venv/bin/python",
       "args": ["-m", "pixelart_mcp.server"]
     }
   }
 }
 ```
 
-## Daftar tools (23)
+## Tools List (23)
 
-**Menggambar**
+**Drawing**
 - `pixelart_create_canvas`, `pixelart_import_canvas`, `pixelart_set_pixel`, `pixelart_draw_line`, `pixelart_draw_rect`, `pixelart_draw_circle`, `pixelart_draw_polygon`, `pixelart_flood_fill`
 
-**Manajemen kanvas**
+**Canvas Management**
 - `pixelart_clear_canvas`, `pixelart_flip_canvas`, `pixelart_duplicate_canvas`, `pixelart_get_canvas_info`, `pixelart_get_canvas_preview`, `pixelart_delete_canvas`, `pixelart_list_canvases`
 
-**Palet warna**
+**Color Palette**
 - `pixelart_generate_palette`, `pixelart_extract_palette`
 
-**Saran ukuran**
+**Size Suggestion**
 - `pixelart_suggest_tile_size`
 
 **Tileset**
 - `pixelart_create_tileset`, `pixelart_set_tile`, `pixelart_export_tileset`, `pixelart_delete_tileset`, `pixelart_list_tilesets`
 
-## Alur kerja tipikal
+## Typical Workflow
 
-1. `pixelart_suggest_tile_size` (opsional) — tanya ukuran tile ideal berdasarkan kategori objek atau resolusi layar.
-2. `pixelart_generate_palette` — buat palet warna sesuai gaya/mood.
-3. `pixelart_create_canvas` → `pixelart_set_pixel` / `draw_line` / `draw_rect` / `draw_circle` / `flood_fill` — gambar satu tile.
-4. `pixelart_get_canvas_preview` — lihat hasilnya (upscaled PNG) sebelum lanjut.
-5. `pixelart_create_tileset` → `pixelart_set_tile` (ulangi untuk tiap tile) → `pixelart_export_tileset`.
-6. Hasil `export_tileset` berupa PNG + JSON metadata (ukuran tile, grid, PPU) —
-   agent bisa lanjut memanggil tool `unity-mcp-server` untuk slice/import ke proyek Unity.
+1. `pixelart_suggest_tile_size` (optional) — ask for ideal tile size based on object category or screen resolution.
+2. `pixelart_generate_palette` — create color palette according to style/mood.
+3. `pixelart_create_canvas` → `pixelart_set_pixel` / `draw_line` / `draw_rect` / `draw_circle` / `flood_fill` — draw a single tile.
+4. `pixelart_get_canvas_preview` — view the result (upscaled PNG) before proceeding.
+5. `pixelart_create_tileset` → `pixelart_set_tile` (repeat for each tile) → `pixelart_export_tileset`.
+6. The result of `export_tileset` is PNG + JSON metadata (tile size, grid, PPU) —
+   the agent can then call `unity-mcp-server` tools to slice/import into a Unity project.
 
-## Menjalankan test
+## Running Tests
 
 ```bash
 sh claude_tools/run_tests.sh
 ```
 
-## Struktur
+## Structure
 
 ```
 pixelart_mcp/
-  server.py      # entry point, registrasi 23 tools
-  canvas.py       # primitif gambar piksel
-  palette.py      # generator palet
-  sizing.py       # heuristik ukuran tile
-  tileset.py      # assembly & export tileset
+  server.py      # entry point, registers 23 tools
+  canvas.py       # pixel drawing primitives
+  palette.py      # palette generator
+  sizing.py       # tile size heuristics
+  tileset.py      # tileset assembly & export
   models.py       # Pydantic input models
-  tests/          # 58 unit test
+  tests/          # 58 unit tests
 claude_tools/     # helper script (dump schema, run tests)
-task.md           # status & catatan pengerjaan
-PUBLISHING.md      # panduan publish ke PyPI & MCP Registry resmi
+task.md           # status & work notes
+PUBLISHING.md      # guide to publish to PyPI & official MCP Registry
 ```
 
-## Jika `unity-mcp-server` tidak tersedia
+## If `unity-mcp-server` is Not Available
 
-`pixelart_mcp` **tidak bergantung** secara teknis pada `unity-mcp-server` —
-semua tool di atas tetap berfungsi penuh tanpanya. Bedanya hanya di langkah
-terakhir: tanpa `unity-mcp-server`, hasil `pixelart_export_tileset` (PNG +
-JSON metadata) harus diimport manual ke Unity Editor. Berikut langkahnya
-(berdasarkan Unity Manual resmi), untuk dituntun AI ke user non-teknis:
+`pixelart_mcp` is **not technically dependent** on `unity-mcp-server` —
+all tools above work fully without it. The difference is only in the final step:
+without `unity-mcp-server`, the result of `pixelart_export_tileset` (PNG +
+JSON metadata) must be imported manually into Unity Editor. Here are the steps
+(based on official Unity Manual), to guide an AI when helping a non-technical user:
 
-1. **Salin file PNG hasil ekspor** ke folder `Assets` (atau subfolder seperti
-   `Assets/Sprites`) di dalam project Unity.
-2. Di jendela **Project**, klik file PNG tersebut. Di panel **Inspector**:
+1. **Copy the exported PNG file** to the `Assets` folder (or a subfolder like
+   `Assets/Sprites`) within your Unity project.
+2. In the **Project** window, click on the PNG file. In the **Inspector** panel:
    - **Texture Type** → `Sprite (2D and UI)`
-   - **Sprite Mode** → `Multiple` (karena berisi banyak tile dalam satu sheet)
-   - **Pixels Per Unit** → isi dengan nilai `ppu` dari file JSON metadata
-   - **Filter Mode** → `Point (no filter)` — supaya pixel art tetap tajam, tidak blur
-   - **Compression** → `None` — supaya warna tidak rusak
-   - Klik **Apply**.
-3. Klik tombol **Sprite Editor** di Inspector untuk membuka Sprite Editor.
-4. Di Sprite Editor, klik dropdown **Slice**, pilih tipe **Grid By Cell Size**,
-   lalu isi **Pixel Size** dengan `tile_width` x `tile_height` dari JSON metadata.
-5. Klik **Slice**, lalu klik **Apply** di toolbar Sprite Editor.
-6. Selesai — setiap tile sekarang jadi sprite terpisah yang bisa di-drag
-   langsung ke Scene atau dipakai di Tilemap.
+   - **Sprite Mode** → `Multiple` (because it contains many tiles in one sheet)
+   - **Pixels Per Unit** → enter the `ppu` value from the JSON metadata file
+   - **Filter Mode** → `Point (no filter)` — to keep pixel art sharp, not blurred
+   - **Compression** → `None` — to prevent color corruption
+   - Click **Apply**.
+3. Click the **Sprite Editor** button in the Inspector to open the Sprite Editor.
+4. In the Sprite Editor, click the **Slice** dropdown, select **Grid By Cell Size**,
+   then enter the **Pixel Size** with `tile_width` x `tile_height` from the JSON metadata.
+5. Click **Slice**, then click **Apply** in the Sprite Editor toolbar.
+6. Done — each tile is now a separate sprite that can be dragged directly into the
+   Scene or used in a Tilemap.
 
-Semua angka yang dibutuhkan (`tile_width`, `tile_height`, `ppu`) sudah
-tersedia otomatis di file `.json` yang dihasilkan `pixelart_export_tileset`
-— AI tidak perlu menghitung ulang, tinggal baca dari sana dan sampaikan ke
-user langkah di atas.
+All required values (`tile_width`, `tile_height`, `ppu`) are automatically
+available in the `.json` file generated by `pixelart_export_tileset`
+— the AI does not need to calculate them, just read them and guide the user
+through the steps above.
 
-## Untuk AI agent yang merawat/mengembangkan proyek ini
+## For AI Agents Maintaining/Developing This Project
 
-Baca `AGENTS.md` dulu — berisi peta arsitektur, konvensi wajib, checklist
-menambah tool baru, dan alur menangani kritik/permintaan fitur dari pengguna.
+Read `AGENTS.md` first — it contains the architecture map, mandatory conventions,
+checklist for adding new tools, and the workflow for handling user feedback/feature requests.
 
-## Lisensi
+## License
 
-Apache License 2.0 — lihat file `LICENSE` dan `NOTICE`.
+Apache License 2.0 — see `LICENSE` and `NOTICE` files.
 
-## Publish ke PyPI & MCP Registry
+## Publishing to PyPI & MCP Registry
 
-Lihat `PUBLISHING.md` untuk panduan lengkap (perintah persis, butuh
-kredensial pribadi — PyPI token & login GitHub OAuth).
+See `PUBLISHING.md` for complete guide (exact commands, requires personal
+credentials — PyPI token & GitHub OAuth login).
 
-## Catatan versi SDK
+## SDK Version Notes
 
-Server ini dibangun di atas **v1.x** MCP Python SDK (stable, direkomendasikan
-untuk produksi). SDK v2 masih pre-release per Juli 2026 — belum dipakai di sini
-sesuai kebijakan "hanya referensi resmi/terbaru yang sudah stabil".
+This server is built on top of **v1.x** MCP Python SDK (stable, recommended
+for production). SDK v2 is still pre-release as of July 2026 — not used here
+per policy of "only stable/current official references".
