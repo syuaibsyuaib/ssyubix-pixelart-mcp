@@ -1,4 +1,4 @@
-# pixelart_mcp
+# ssyubix-pixelart-mcp
 
 MCP server (Python) untuk menggambar pixel art dan menyusun tileset game 2D.
 Dibangun dengan [MCP Python SDK v1.x](https://github.com/modelcontextprotocol/python-sdk)
@@ -8,7 +8,7 @@ Dibangun dengan [MCP Python SDK v1.x](https://github.com/modelcontextprotocol/py
 ## Instalasi
 
 ```bash
-cd pixelart_mcp
+cd ssyubix-pixelart-mcp
 python3 -m venv venv
 source venv/bin/activate   # Windows: venv\Scripts\activate
 pip install -e .
