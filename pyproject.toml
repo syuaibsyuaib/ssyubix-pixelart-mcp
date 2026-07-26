@@ -1,6 +1,6 @@
 [project]
 name = "ssyubix-pixelart-mcp"
-version = "0.1.0"
+version = "0.1.1"
 description = "MCP server for drawing pixel-art tiles and tilesets for 2D games"
 readme = "README.md"
 requires-python = ">=3.10"

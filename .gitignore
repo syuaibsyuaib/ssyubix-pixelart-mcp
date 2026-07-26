@@ -1,1 +1,3 @@
 .vscode/mcp.json
+claude_tools/*
+tools/mcp-publisher.exe

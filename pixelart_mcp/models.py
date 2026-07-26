@@ -145,6 +145,16 @@ class SuggestTileSizeInput(BaseModel):
     screen_height: Optional[int] = Field(default=None, ge=1, description="Target game screen height in pixels.")
 
 
+class SuggestTilemapLayoutInput(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    tile_width: int = Field(..., ge=1, le=512, description="Width of a single tile in pixels.")
+    tile_height: int = Field(..., ge=1, le=512, description="Height of a single tile in pixels.")
+    columns: Optional[int] = Field(default=None, ge=1, description="Explicit number of tile columns in the map.")
+    rows: Optional[int] = Field(default=None, ge=1, description="Explicit number of tile rows in the map.")
+    screen_width: Optional[int] = Field(default=None, ge=1, description="Target full map/screen width in pixels (used to derive columns if not given).")
+    screen_height: Optional[int] = Field(default=None, ge=1, description="Target full map/screen height in pixels (used to derive rows if not given).")
+
+
 class GeneratePaletteInput(BaseModel):
     model_config = ConfigDict(extra="forbid")
     n_colors: int = Field(default=8, ge=1, le=64)

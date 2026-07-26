@@ -39,10 +39,11 @@ from .models import (
     ImportCanvasInput,
     SetPixelInput,
     SetTileInput,
+    SuggestTilemapLayoutInput,
     SuggestTileSizeInput,
 )
 from .palette import generate_palette
-from .sizing import suggest_tile_size
+from .sizing import suggest_tile_size, suggest_tilemap_layout
 from .tileset import Tileset
 
 mcp = FastMCP("ssyubix-pixelart-mcp")
@@ -369,7 +370,7 @@ def pixelart_extract_palette(params: ExtractPaletteInput) -> str:
     annotations={"title": "Suggest tile size", "readOnlyHint": True, "destructiveHint": False, "idempotentHint": True, "openWorldHint": False},
 )
 def pixelart_suggest_tile_size(params: SuggestTileSizeInput) -> str:
-    """Suggest an ideal tile size in pixels for a game asset.
+    """Suggest an ideal size in pixels for ONE tile -- NOT a full tilemap/level image.
 
     Uses a 16-pixel-per-unit (PPU) base-grid convention by default. If
     `category` is given (small_prop, character, large_character,
@@ -377,12 +378,51 @@ def pixelart_suggest_tile_size(params: SuggestTileSizeInput) -> str:
     target screen resolution is given, picks a PPU that divides the
     screen evenly. Falls back to a 16x16 default.
 
+    IMPORTANT: the result is one tile's size. A playable tilemap/level
+    is a grid of MANY tiles at this size, not a single canvas this
+    size -- call pixelart_suggest_tilemap_layout next to work out the
+    grid, then pixelart_create_tileset to build it. Never export a
+    single tile-sized canvas as if it were the whole tilemap.
+
     Args:
         params: category, screen_width, screen_height (all optional).
     Returns:
-        JSON string: {"tile_width", "tile_height", "ppu", "reasoning"}.
+        JSON string: {"tile_width", "tile_height", "ppu", "reasoning", "note"}.
     """
     result = suggest_tile_size(params.category, params.screen_width, params.screen_height)
+    return json.dumps(result)
+
+
+@mcp.tool(
+    name="pixelart_suggest_tilemap_layout",
+    annotations={"title": "Suggest tilemap grid layout", "readOnlyHint": True, "destructiveHint": False, "idempotentHint": True, "openWorldHint": False},
+)
+def pixelart_suggest_tilemap_layout(params: SuggestTilemapLayoutInput) -> str:
+    """Work out the grid (columns x rows) and total pixel size for a FULL tilemap.
+
+    Use this whenever the user wants an actual level/map, not a single
+    tile or asset. Call pixelart_suggest_tile_size first to get
+    tile_width/tile_height, then this tool with either an explicit
+    columns+rows or a target screen/level size in pixels. Build the
+    result with pixelart_create_tileset using the returned
+    columns/rows, filling every slot via pixelart_set_tile -- a
+    tilemap is never a single small canvas.
+
+    Args:
+        params: tile_width, tile_height, and either (columns, rows) or
+            (screen_width, screen_height).
+    Returns:
+        JSON string: {"tile_width", "tile_height", "columns", "rows",
+        "total_tiles", "total_map_width_px", "total_map_height_px", "reasoning"}.
+    """
+    result = suggest_tilemap_layout(
+        params.tile_width,
+        params.tile_height,
+        params.columns,
+        params.rows,
+        params.screen_width,
+        params.screen_height,
+    )
     return json.dumps(result)
 
 

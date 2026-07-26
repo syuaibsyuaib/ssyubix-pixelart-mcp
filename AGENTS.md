@@ -4,6 +4,37 @@ Dokumen ini untuk AI (Claude atau lainnya) yang diminta menambah fitur baru,
 memperbaiki bug, atau menindaklanjuti kritik pengguna terhadap server ini.
 Baca ini dulu sebelum mengubah kode.
 
+## Terminologi — WAJIB dipahami sebelum memakai tool sizing
+
+Kesalahan yang sudah pernah terjadi di produksi: AI memanggil
+`pixelart_suggest_tile_size`, dapat angka mis. 32x32, lalu langsung
+membuat kanvas 32x32 itu dan menyerahkannya ke user sebagai "tilemap" —
+hasilnya pecah/kekecilan karena 32x32 itu ukuran **satu tile**, bukan
+ukuran gambar akhir. Definisi yang harus dipegang:
+
+- **Tile**: satu ubin kecil (mis. 16x16px). Dibuat dengan `pixelart_create_canvas`.
+- **Tileset**: lembar berisi banyak tile disusun dalam grid (mis. kumpulan
+  jenis-jenis tile: rumput, jalan, air). Dibuat dengan `pixelart_create_tileset`
+  + `pixelart_set_tile` per slot + `pixelart_export_tileset`.
+- **Tilemap**: peta/level lengkap yang tersusun dari banyak tile — bisa
+  berupa lembar besar hasil menempatkan tile berulang di tiap posisi grid
+  (pakai `pixelart_create_tileset` dengan `columns`/`rows` = ukuran peta
+  dalam satuan tile, lalu `pixelart_set_tile` untuk tiap posisi), ATAU
+  representasi index array yang disusun di dalam game engine (misalnya
+  Unity Tilemap component) menggunakan tileset yang sudah diekspor —
+  **bukan** satu kanvas kecil seukuran satu tile.
+
+Kalau user minta "tilemap" atau "peta/level", ALUR WAJIB:
+1. `pixelart_suggest_tile_size` → dapat ukuran satu tile.
+2. `pixelart_suggest_tilemap_layout` → dapat jumlah grid (columns/rows) dan
+   ukuran total gambar dalam piksel, berdasarkan ukuran layar/level yang diinginkan.
+3. `pixelart_create_tileset` dengan `columns`/`rows` dari langkah 2.
+4. `pixelart_set_tile` untuk MENGISI SETIAP slot di grid tersebut (bukan cuma satu).
+5. `pixelart_export_tileset`.
+
+JANGAN PERNAH mengekspor kanvas tunggal seukuran satu tile dan menyebutnya
+tilemap — itu persis bug yang membuat fitur ini ditambahkan.
+
 ## Peta arsitektur (di mana harus mengubah apa)
 
 | File | Tanggung jawab | Ubah di sini kalau... |

@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.syuaibsyuaib/ssyubix-pixelart-mcp",
   "title": "ssyubix-pixelart-mcp",
-  "description": "MCP server for drawing pixel-art tiles and tilesets for 2D games, with PNG + metadata export designed to hand off to unity-mcp-server for Unity import/slicing.",
-  "version": "0.1.0",
+  "description": "Draw pixel-art tiles and tilesets for 2D games, with PNG+metadata export for Unity.",
+  "version": "0.1.1",
   "repository": {
     "url": "https://github.com/syuaibsyuaib/ssyubix-pixelart-mcp",
     "source": "github"
@@ -13,7 +13,7 @@
       "registryType": "pypi",
       "registryBaseUrl": "https://pypi.org",
       "identifier": "ssyubix-pixelart-mcp",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "runtimeHint": "uvx",
       "transport": { "type": "stdio" }
     }

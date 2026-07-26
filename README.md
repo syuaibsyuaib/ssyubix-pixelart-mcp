@@ -47,7 +47,7 @@ Add to `claude_desktop_config.json` (Claude Desktop) or via
 }
 ```
 
-## Tools List (23)
+## Tools List (24)
 
 **Drawing**
 - `pixelart_create_canvas`, `pixelart_import_canvas`, `pixelart_set_pixel`, `pixelart_draw_line`, `pixelart_draw_rect`, `pixelart_draw_circle`, `pixelart_draw_polygon`, `pixelart_flood_fill`
@@ -59,19 +59,38 @@ Add to `claude_desktop_config.json` (Claude Desktop) or via
 - `pixelart_generate_palette`, `pixelart_extract_palette`
 
 **Size Suggestion**
-- `pixelart_suggest_tile_size`
+- `pixelart_suggest_tile_size`, `pixelart_suggest_tilemap_layout`
 
 **Tileset**
 - `pixelart_create_tileset`, `pixelart_set_tile`, `pixelart_export_tileset`, `pixelart_delete_tileset`, `pixelart_list_tilesets`
 
+## Terminology: Tile vs Tileset vs Tilemap
+
+These are easy to conflate and doing so produces broken/tiny output — a
+real bug that happened in production: an agent asked for a "tilemap" got
+back a single 32x32 canvas (that's a *tile* size) and shipped it as the
+whole map, which looked broken when used at real scale.
+
+- **Tile**: one small square (e.g. 16x16px) — `pixelart_create_canvas`.
+- **Tileset**: a sheet of many distinct tiles arranged in a grid (e.g. grass,
+  path, water tile types) — `pixelart_create_tileset` + `pixelart_set_tile` + `pixelart_export_tileset`.
+- **Tilemap**: a full level/map, composed of many tiles placed across a grid
+  (built the same way as a tileset, but every slot is filled to represent
+  the actual level layout) — never a single tile-sized canvas.
+
 ## Typical Workflow
 
+**For a single asset/tile:**
 1. `pixelart_suggest_tile_size` (optional) — ask for ideal tile size based on object category or screen resolution.
 2. `pixelart_generate_palette` — create color palette according to style/mood.
 3. `pixelart_create_canvas` → `pixelart_set_pixel` / `draw_line` / `draw_rect` / `draw_circle` / `flood_fill` — draw a single tile.
 4. `pixelart_get_canvas_preview` — view the result (upscaled PNG) before proceeding.
-5. `pixelart_create_tileset` → `pixelart_set_tile` (repeat for each tile) → `pixelart_export_tileset`.
-6. The result of `export_tileset` is PNG + JSON metadata (tile size, grid, PPU) —
+
+**For a tileset or a full tilemap/level:**
+5. `pixelart_suggest_tilemap_layout` — get the grid (columns/rows) and total pixel
+   size needed, from either an explicit tile count or a target screen/level size.
+6. `pixelart_create_tileset` with that grid → `pixelart_set_tile` for **every** slot → `pixelart_export_tileset`.
+7. The result of `export_tileset` is PNG + JSON metadata (tile size, grid, PPU) —
    the agent can then call `unity-mcp-server` tools to slice/import into a Unity project.
 
 ## Running Tests
