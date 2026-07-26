@@ -1,0 +1,2 @@
+[console_scripts]
+ssyubix-pixelart-mcp = pixelart_mcp.server:main
