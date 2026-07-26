@@ -1,0 +1,20 @@
+[project]
+name = "pixelart-mcp"
+version = "0.1.0"
+description = "MCP server for drawing pixel-art tiles and tilesets for 2D games"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp[cli]>=1.27,<2",
+    "pillow>=10.0",
+    "pydantic>=2.0",
+]
+
+[project.scripts]
+pixelart-mcp = "pixelart_mcp.server:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["pixelart_mcp*"]
