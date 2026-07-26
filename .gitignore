@@ -1,3 +1,7 @@
 .vscode/mcp.json
 claude_tools/*
 tools/mcp-publisher.exe
+.pytest_cache/*
+__pycache__/*
+pixelart_mcp/__pycache__/*
+pixelart_mcp/tests/__pycache__/*
