@@ -1,14 +1,7 @@
 name: Publish to PyPI
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'pixelart_mcp/**'
-      - 'pyproject.toml'
-      - '.github/workflows/publish-to-pypi.yml'
-  workflow_dispatch:  # Allow manual trigger
+  workflow_dispatch:  # Allow manual trigger only
 
 jobs:
   publish:
