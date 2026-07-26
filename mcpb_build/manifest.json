@@ -1,0 +1,33 @@
+{
+  "manifest_version": "0.4",
+  "name": "ssyubix-pixelart-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for drawing pixel-art tiles and tilesets for 2D games, with PNG + metadata export designed to hand off to unity-mcp-server for Unity import/slicing.",
+  "author": {
+    "name": "syuaib",
+    "email": "syuaibsyuaib@gmail.com",
+    "url": "https://github.com/syuaibsyuaib/ssyubix-pixelart-mcp"
+  },
+  "homepage": "https://github.com/syuaibsyuaib/ssyubix-pixelart-mcp",
+  "documentation": "https://github.com/syuaibsyuaib/ssyubix-pixelart-mcp",
+  "server": {
+    "type": "uv",
+    "entry_point": "pixelart_mcp.server:main",
+    "mcp_config": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "ssyubix-pixelart-mcp==0.1.0",
+        "ssyubix-pixelart-mcp"
+      ]
+    }
+  },
+  "keywords": [
+    "pixel-art",
+    "tileset",
+    "2d-games",
+    "unity",
+    "mcp"
+  ],
+  "license": "Apache-2.0"
+}
