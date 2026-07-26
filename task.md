@@ -1,4 +1,4 @@
-# Task: pixelart_mcp
+# Task: ssyubix-pixelart-mcp (nama internal modul tetap pixelart_mcp)
 
 MCP server (Python, FastMCP, stdio) untuk menggambar pixel art & menyusun
 tileset game 2D, dirancang untuk berjalan berdampingan dengan

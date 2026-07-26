@@ -45,7 +45,7 @@ from .palette import generate_palette
 from .sizing import suggest_tile_size
 from .tileset import Tileset
 
-mcp = FastMCP("pixelart_mcp")
+mcp = FastMCP("ssyubix-pixelart-mcp")
 
 _canvases: Dict[str, PixelCanvas] = {}
 _tilesets: Dict[str, Tileset] = {}

@@ -1,16 +1,31 @@
 [project]
-name = "pixelart-mcp"
+name = "ssyubix-pixelart-mcp"
 version = "0.1.0"
 description = "MCP server for drawing pixel-art tiles and tilesets for 2D games"
+readme = "README.md"
 requires-python = ">=3.10"
+license = "Apache-2.0"
+authors = [
+    { name = "syuaib" }
+]
+keywords = ["mcp", "model-context-protocol", "pixel-art", "tileset", "2d-games", "unity"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Topic :: Games/Entertainment",
+    "Topic :: Multimedia :: Graphics",
+]
 dependencies = [
     "mcp[cli]>=1.27,<2",
     "pillow>=10.0",
     "pydantic>=2.0",
 ]
 
+[project.urls]
+Repository = "https://github.com/syuaibsyuaib/ssyubix-pixelart-mcp"
+
 [project.scripts]
-pixelart-mcp = "pixelart_mcp.server:main"
+ssyubix-pixelart-mcp = "pixelart_mcp.server:main"
 
 [build-system]
 requires = ["setuptools>=68"]

@@ -1,4 +1,6 @@
-# pixelart_mcp
+# ssyubix-pixelart-mcp
+
+<!-- mcp-name: io.github.syuaibsyuaib/ssyubix-pixelart-mcp -->
 
 MCP server (Python) untuk menggambar pixel art dan menyusun tileset game 2D.
 Dibangun dengan [MCP Python SDK v1.x](https://github.com/modelcontextprotocol/python-sdk)
@@ -7,8 +9,15 @@ Dibangun dengan [MCP Python SDK v1.x](https://github.com/modelcontextprotocol/py
 
 ## Instalasi
 
+Dari PyPI:
 ```bash
-cd pixelart_mcp
+pip install ssyubix-pixelart-mcp
+```
+
+Atau dari source:
+```bash
+git clone https://github.com/syuaibsyuaib/ssyubix-pixelart-mcp
+cd ssyubix-pixelart-mcp
 python3 -m venv venv
 source venv/bin/activate   # Windows: venv\Scripts\activate
 pip install -e .
@@ -18,6 +27,8 @@ pip install -e .
 
 ```bash
 python -m pixelart_mcp.server
+# atau, jika diinstall dari PyPI:
+ssyubix-pixelart-mcp
 ```
 
 ## Menyambungkan ke Claude Desktop / Claude Code
@@ -29,7 +40,7 @@ Tambahkan ke `claude_desktop_config.json` (Claude Desktop) atau lewat
 {
   "mcpServers": {
     "pixelart": {
-      "command": "/path/ke/pixelart_mcp/venv/bin/python",
+      "command": "/path/ke/ssyubix-pixelart-mcp/venv/bin/python",
       "args": ["-m", "pixelart_mcp.server"]
     }
   }
@@ -73,15 +84,16 @@ sh claude_tools/run_tests.sh
 
 ```
 pixelart_mcp/
-  server.py      # entry point, registrasi 13 tools
+  server.py      # entry point, registrasi 23 tools
   canvas.py       # primitif gambar piksel
   palette.py      # generator palet
   sizing.py       # heuristik ukuran tile
   tileset.py      # assembly & export tileset
   models.py       # Pydantic input models
-  tests/          # 38 unit test
+  tests/          # 58 unit test
 claude_tools/     # helper script (dump schema, run tests)
 task.md           # status & catatan pengerjaan
+PUBLISHING.md      # panduan publish ke PyPI & MCP Registry resmi
 ```
 
 ## Jika `unity-mcp-server` tidak tersedia
@@ -117,6 +129,15 @@ user langkah di atas.
 
 Baca `AGENTS.md` dulu — berisi peta arsitektur, konvensi wajib, checklist
 menambah tool baru, dan alur menangani kritik/permintaan fitur dari pengguna.
+
+## Lisensi
+
+Apache License 2.0 — lihat file `LICENSE` dan `NOTICE`.
+
+## Publish ke PyPI & MCP Registry
+
+Lihat `PUBLISHING.md` untuk panduan lengkap (perintah persis, butuh
+kredensial pribadi — PyPI token & login GitHub OAuth).
 
 ## Catatan versi SDK
 

@@ -33,9 +33,15 @@ sampaikan ke user).
 
 ## Konvensi wajib diikuti
 
-1. **Nama server**: `pixelart_mcp` (format `{service}_mcp`, jangan diubah).
+1. **Nama proyek/distribusi PyPI/nama server MCP**: `ssyubix-pixelart-mcp`. Nama
+   modul Python internal (folder yang di-`import`) tetap `pixelart_mcp` — ini
+   pola umum (nama distribusi PyPI boleh beda dari nama modul). Jangan ubah
+   nama modul internal tanpa alasan kuat, karena itu breaking change untuk
+   siapa pun yang sudah `import pixelart_mcp`.
 2. **Nama tool**: `pixelart_{action}_{resource}`, snake_case, action-oriented
    (`pixelart_draw_polygon`, bukan `polygon` atau `draw_polygon` tanpa prefix).
+   Prefix tool ini independen dari nama proyek/distribusi di atas — jangan ikut
+   diubah kalau nama proyek berubah lagi di masa depan, kecuali diminta eksplisit.
 3. **Setiap tool** wajib punya:
    - Pydantic input model di `models.py` dengan `model_config = ConfigDict(extra="forbid")`
      dan `Field(..., description=...)` untuk tiap parameter.
