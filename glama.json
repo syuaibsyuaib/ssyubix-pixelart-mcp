@@ -1,0 +1,27 @@
+{
+  "name": "ssyubix-pixelart-mcp",
+  "type": "pixelart-mcp-metadata",
+  "version": "0.1.0",
+  "description": "MCP server (Python) for drawing pixel art and assembling 2D game tilesets. Built with MCP Python SDK v1.x, stdio transport.",
+  "author": "syuaibsyuaib",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/syuaibsyuaib/ssyubix-pixelart-mcp"
+  },
+  "tools_count": 24,
+  "tools_sample": [
+    "pixelart_create_canvas",
+    "pixelart_import_canvas",
+    "pixelart_set_pixel",
+    "pixelart_draw_line",
+    "pixelart_draw_rect",
+    "pixelart_draw_circle",
+    "pixelart_draw_polygon",
+    "pixelart_flood_fill"
+  ],
+  "maintainer_contact": "",
+  "created_by": "copilot-assistant",
+  "created_at": "2026-07-28T00:00:00Z",
+  "notes": "Generated from README.md. Adjust fields (maintainer_contact, version, etc.) as needed for your glama integration."
+}
