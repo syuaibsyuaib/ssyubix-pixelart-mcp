@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: ssyubix-pixelart-mcp
-Version: 0.1.1
+Version: 0.1.2
 Summary: MCP server for drawing pixel-art tiles and tilesets for 2D games
 Author: syuaib
 License-Expression: Apache-2.0
