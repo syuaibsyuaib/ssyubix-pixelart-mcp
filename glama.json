@@ -1,27 +1,49 @@
 {
-  "name": "ssyubix-pixelart-mcp",
-  "type": "pixelart-mcp-metadata",
-  "version": "0.1.2",
-  "description": "MCP server (Python) for drawing pixel art and assembling 2D game tilesets. Built with MCP Python SDK v1.x, stdio transport.",
-  "author": "syuaibsyuaib",
-  "license": "Apache-2.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/syuaibsyuaib/ssyubix-pixelart-mcp"
-  },
-  "tools_count": 24,
-  "tools_sample": [
-    "pixelart_create_canvas",
-    "pixelart_import_canvas",
-    "pixelart_set_pixel",
-    "pixelart_draw_line",
-    "pixelart_draw_rect",
-    "pixelart_draw_circle",
-    "pixelart_draw_polygon",
-    "pixelart_flood_fill"
+  "$schema": "https://glama.ai/mcp/schemas/server.json",
+  "maintainers": ["syuaibsyuaib"],
+  "name": "io.github.syuaibsyuaib/ssyubix-pixelart-mcp",
+  "description": "MCP server (Python) for drawing pixel art and assembling 2D game tilesets. Built with MCP Python SDK v1.x, stdio transport. Provides 24 drawing and tileset tools and export metadata for Unity import.",
+  "type": "mcp_server",
+  "status": "beta",
+  "framework": "MCP Python SDK v1.x",
+  "tools": 24,
+  "transport": ["stdio"],
+  "keywords": [
+    "pixelart",
+    "mcp-server",
+    "pixel-art",
+    "tileset",
+    "tilemap",
+    "unity",
+    "python",
+    "palette",
+    "export"
   ],
-  "maintainer_contact": "",
-  "created_by": "copilot-assistant",
-  "created_at": "2026-07-28T00:00:00Z",
-  "notes": "Generated from README.md. Adjust fields (maintainer_contact, version, etc.) as needed for your glama integration."
+  "features": {
+    "drawing": {
+      "enabled": true,
+      "tools_count": 8,
+      "note": "Pixel-level drawing primitives: create/import canvas, set_pixel, draw_line, draw_rect, draw_circle, draw_polygon, flood_fill"
+    },
+    "canvas_management": {
+      "enabled": true,
+      "tools_count": 7,
+      "note": "Canvas utilities: clear, flip, duplicate, get_info, get_preview, delete, list"
+    },
+    "tileset_export": {
+      "enabled": true,
+      "tools_count": 5,
+      "note": "Create tileset, set_tile, export_tileset (PNG + JSON metadata), delete_tileset, list_tilesets"
+    },
+    "palette_generation": {
+      "enabled": true,
+      "tools_count": 2,
+      "note": "generate_palette, extract_palette"
+    },
+    "sizing": {
+      "enabled": true,
+      "tools_count": 2,
+      "note": "suggest_tile_size, suggest_tilemap_layout"
+    }
+  }
 }
