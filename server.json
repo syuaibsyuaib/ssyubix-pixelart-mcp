@@ -3,7 +3,7 @@
   "name": "io.github.syuaibsyuaib/ssyubix-pixelart-mcp",
   "title": "ssyubix-pixelart-mcp",
   "description": "Draw pixel-art tiles and tilesets for 2D games, with PNG+metadata export for Unity.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "repository": {
     "url": "https://github.com/syuaibsyuaib/ssyubix-pixelart-mcp",
     "source": "github"
@@ -13,8 +13,8 @@
       "registryType": "pypi",
       "registryBaseUrl": "https://pypi.org",
       "identifier": "ssyubix-pixelart-mcp",
-      "version": "0.1.1",
-      "runtimeHint": "uvx",
+      "version": "0.1.2",
+      "runtimeHint": "uv",
       "transport": { "type": "stdio" }
     }
   ]
