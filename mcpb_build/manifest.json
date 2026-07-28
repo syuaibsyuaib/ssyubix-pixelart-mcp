@@ -14,8 +14,10 @@
     "type": "uv",
     "entry_point": "pixelart_mcp.server:main",
     "mcp_config": {
-      "command": "uvx",
+      "command": "uv",
       "args": [
+        "tool",
+        "run",
         "--from",
         "ssyubix-pixelart-mcp==0.1.1",
         "ssyubix-pixelart-mcp"
