@@ -1,7 +1,7 @@
 {
   "name": "ssyubix-pixelart-mcp",
   "type": "pixelart-mcp-metadata",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "MCP server (Python) for drawing pixel art and assembling 2D game tilesets. Built with MCP Python SDK v1.x, stdio transport.",
   "author": "syuaibsyuaib",
   "license": "Apache-2.0",
